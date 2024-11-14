@@ -11,6 +11,8 @@ const strokeWidth = 1.5;
 const deltaY = 100;
 const deltaX = 100;
 
+const pieces = [];
+
 // Rendering logic
 function drawRefDots (ctx, coords, color) {
 	ctx.fillStyle = color;
@@ -58,6 +60,10 @@ function draw3Sides(ctx) {
 	ctx.stroke();
 }
 
+function addPiece(p) {
+	pieces.push(p);
+}
+
 function drawPiece (ctx, start, end) {
 	ctx.strokeStyle = "rgb(0 0 0)";
 	ctx.lineWidth = strokeWidth + 1;
@@ -98,6 +104,7 @@ function draw(ctx) {
 	}
 	
 	// Add logic here to draw additional pieces on the kumiko panel
+	pieces.forEach(p => drawPiece(ctx, p.c1, p.c2));
 
 	// Repeat draw loop
 	setTimeout(draw, 1000 / frameRate, ctx);
