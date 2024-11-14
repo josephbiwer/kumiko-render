@@ -1,10 +1,19 @@
 let m1 = null;
 
+
+function getMousePos(element, e) {
+	const rect = element.getBoundingClientRect();
+	const x = e.clientX - rect.left;
+	const y = e.clientY - rect.top;
+	return { x, y };
+}
+
 canvas.addEventListener('mousemove', e => {
 	if(m1 !== null) {
+		const coords = getMousePos(e.target, e);
 		const mouseCoords = {
-			x: e.layerX / (deltaX / density),
-			y: e.layerY / (deltaY / density)
+			x: coords.x / (deltaX / density),
+			y: coords.y / (deltaY / density)
 		}
 
 		const m2 = {
@@ -22,9 +31,10 @@ canvas.addEventListener('mouseleave', e => {
 });
 
 canvas.addEventListener('mousedown', e => {
+	const coords = getMousePos(e.target, e);
 	const mouseCoords = {
-		x: e.layerX / (deltaX / density),
-		y: e.layerY / (deltaY / density)
+		x: coords.x / (deltaX / density),
+		y: coords.y / (deltaY / density)
 	}
 
 	m1 = {
@@ -37,24 +47,27 @@ canvas.addEventListener('mousedown', e => {
 });
 
 canvas.addEventListener('mouseup', e => {
-	const mouseCoords = {
-		x: e.layerX / (deltaX / density),
-		y: e.layerY / (deltaY / density)
+	if(m1 !== null) {
+		const coords = getMousePos(e.target, e);
+		const mouseCoords = {
+			x: coords.x / (deltaX / density),
+			y: coords.y / (deltaY / density)
+		}
+
+		const m2 = {
+			x: Math.round(mouseCoords.x),
+			y: Math.round(mouseCoords.y)
+		}
+
+		const p = {
+			c1: m1,
+			c2: m2
+		};
+
+		addPiece(p);
+
+		m1 = null;
+		highlightPoint(e.target.getContext("2d"), null, null);
 	}
-
-	const m2 = {
-		x: Math.round(mouseCoords.x),
-		y: Math.round(mouseCoords.y)
-	}
-
-	const p = {
-		c1: m1,
-		c2: m2
-	};
-
-	addPiece(p);
-
-	m1 = null;
-	highlightPoint(e.target.getContext("2d"), null, null);
 	
 });
