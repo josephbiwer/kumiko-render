@@ -3,8 +3,8 @@ let m1 = null;
 canvas.addEventListener('mousemove', e => {
 	if(m1 !== null) {
 		const mouseCoords = {
-			x: e.layerX / (deltaX / 2),
-			y: e.layerY / (deltaY / 2)
+			x: e.layerX / (deltaX / density),
+			y: e.layerY / (deltaY / density)
 		}
 
 		const m2 = {
@@ -23,8 +23,8 @@ canvas.addEventListener('mouseleave', e => {
 
 canvas.addEventListener('mousedown', e => {
 	const mouseCoords = {
-		x: e.layerX / (deltaX / 2),
-		y: e.layerY / (deltaY / 2)
+		x: e.layerX / (deltaX / density),
+		y: e.layerY / (deltaY / density)
 	}
 
 	m1 = {
@@ -38,8 +38,8 @@ canvas.addEventListener('mousedown', e => {
 
 canvas.addEventListener('mouseup', e => {
 	const mouseCoords = {
-		x: e.layerX / (deltaX / 2),
-		y: e.layerY / (deltaY / 2)
+		x: e.layerX / (deltaX / density),
+		y: e.layerY / (deltaY / density)
 	}
 
 	const m2 = {

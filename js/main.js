@@ -10,6 +10,7 @@ const frameRate = 30;
 const strokeWidth = 1.5;
 const deltaY = 100;
 const deltaX = 100;
+const density = 8;
 
 const pieces = [];
 
@@ -17,15 +18,15 @@ const pieces = [];
 function drawRefDots (ctx, coords, color) {
 	ctx.fillStyle = color;
 	ctx.beginPath();
-	ctx.arc(coords.x * deltaX / 2, coords.y * deltaY / 2, 2, 0, Math.PI * 2, true); // Right eye
+	ctx.arc(coords.x * deltaX / density, coords.y * deltaY / density, 2, 0, Math.PI * 2, true); // Right eye
 	ctx.closePath();
 	ctx.fill();
 }
 
 function drawDots(ctx) {
 	// Drawing connection points
-	for(let x = 0; x <= 2 * canvasDims.x / deltaX; x++){
-		for(let y = 0; y <= 2 * canvasDims.y / deltaY; y++){
+	for(let x = 0; x <= density * canvasDims.x / deltaX; x++){
+		for(let y = 0; y <= density * canvasDims.y / deltaY; y++){
 			drawRefDots(ctx, {x, y}, "rgb(150 0 0 / 100%)");
 		}
 	}
@@ -68,8 +69,8 @@ function drawPiece (ctx, start, end) {
 	ctx.strokeStyle = "rgb(0 0 0)";
 	ctx.lineWidth = strokeWidth + 1;
 	ctx.beginPath();
-	ctx.moveTo(start.x * deltaX / 2, start.y * deltaY / 2);
-	ctx.lineTo(end.x * deltaX / 2, end.y * deltaY / 2);
+	ctx.moveTo(start.x * deltaX / density, start.y * deltaY / density);
+	ctx.lineTo(end.x * deltaX / density, end.y * deltaY / density);
 	ctx.closePath();
 	ctx.stroke();
 }
