@@ -8,27 +8,20 @@ const canvasDims = {
 // Kumiko parameters
 const length = 5;
 const strokeWidth = 2;
-const deltaY = 40;
-const deltaX = 40;
+const deltaY = 100;
+const deltaX = 100;
 
 function draw4Sides(ctx) {
-	const dims = {
-		x: Math.sqrt(2) * canvasDims.x,
-		y: Math.sqrt(2) * canvasDims.y
-	};
-
-	console.log(dims);
-
 	ctx.strokeStyle = "rgb(0 0 0 / 10%)";
 	ctx.lineWidth = strokeWidth;
 	ctx.beginPath();
 	for(let i = - canvasDims.y / deltaY; i < canvasDims.y / deltaY; i++) {
 		ctx.moveTo(0, i * deltaY);
-		ctx.lineTo(dims.x, dims.y + (i * deltaY));
+		ctx.lineTo(canvasDims.x, canvasDims.y + (i * deltaY));
 	}
-	for(let i = - dims.y / deltaY; i < dims.y / deltaY; i++) {
-		ctx.moveTo(dims.x, i * deltaY);
-		ctx.lineTo(0, dims.y + (i * deltaY));
+	for(let i = - canvasDims.y / deltaY; i < canvasDims.y / deltaY; i++) {
+		ctx.moveTo(canvasDims.x, i * deltaY);
+		ctx.lineTo(0, canvasDims.y + (i * deltaY));
 	}
 	ctx.closePath();
 	ctx.stroke();
