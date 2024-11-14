@@ -6,10 +6,10 @@ const canvasDims = {
 }
 
 // Kumiko parameters
-const length = 5;
-const strokeWidth = 2;
-const deltaY = 100;
-const deltaX = 100;
+const frameRate = 30;
+const strokeWidth = 1.5;
+const deltaY = 50;
+const deltaX = 50;
 
 // Rendering logic
 function drawRefDots (ctx, coords, color) {
@@ -20,8 +20,17 @@ function drawRefDots (ctx, coords, color) {
 	ctx.fill();
 }
 
+function drawDots(ctx) {
+	// Drawing connection points
+	for(let x = 0; x <= 2 * canvasDims.x / deltaX; x++){
+		for(let y = 0; y <= 2 * canvasDims.y / deltaY; y++){
+			drawRefDots(ctx, {x, y}, "rgb(150 0 0 / 100%)");
+		}
+	}
+}
+
 function draw4Sides(ctx) {
-	ctx.strokeStyle = "rgb(0 0 0 / 10%)";
+	ctx.strokeStyle = "rgb(220 220 220 / 100%)";
 	ctx.lineWidth = strokeWidth;
 	ctx.beginPath();
 	for(let i = - canvasDims.y / deltaY; i < canvasDims.y / deltaY; i++) {
@@ -34,13 +43,6 @@ function draw4Sides(ctx) {
 	}
 	ctx.closePath();
 	ctx.stroke();
-
-	// Drawing connection points
-	for(let x = 0; x <= 2 * canvasDims.x / deltaX; x++){
-		for(let y = 0; y <= 2 * canvasDims.y / deltaY; y++){
-			drawRefDots(ctx, {x, y}, "rgb(150 0 0 / 100%)");
-		}
-	}
 }
 
 function draw3Sides(ctx) {
@@ -69,32 +71,35 @@ function drawPiece (ctx, start, end) {
 let highlight = null;
 function highlightPoint(ctx, c1, c2) {
 	if(c1 !== null) {
-		if(highlight !== null) {
-			// Set previous highlighted one to its default state
-			drawRefDots(ctx, highlight.c1, "rgb(150 0 0 / 100%)");
-			drawRefDots(ctx, highlight.c2, "rgb(150 0 0 / 100%)");
-			// drawRefDots(ctx, highlight, "rgb(0 0 255 / 100%)");
-		}
-
 		// Highlight new selected ref dot
 		highlight = {c1, c2};
-		drawRefDots(ctx, highlight.c1, "rgb(0 255 0 / 100%)");
-		drawRefDots(ctx, highlight.c2, "rgb(0 255 0 / 100%)");
 	} else {
-			drawRefDots(ctx, highlight.c1, "rgb(150 0 0 / 100%)");
-			drawRefDots(ctx, highlight.c2, "rgb(150 0 0 / 100%)");
 			highlight = null;
 	}
 }
 
-// Drawing kumiko panel
-if(canvas.getContext) {
-	const ctx = canvas.getContext("2d");
+// Draw loop
+function draw(ctx) {
+
+	// Resetting background to white
+	ctx.fillStyle = "rgb(255 255 255)";
+	ctx.fillRect(0, 0, canvasDims.x, canvasDims.y);
 
 	// Drawing background of kumiko panel
 	draw3Sides(ctx);
+	drawDots(ctx);
+
+	// Draw list of pieces
 	drawPiece(ctx, {x: 0, y:0}, {x: 1, y: 1});
 	drawPiece(ctx, {x: 1, y:0}, {x: 1, y: 1});
+
+	// Draw hover indicator
+	if(highlight !== null) {
+		// Set previous highlighted one to its default state
+		drawRefDots(ctx, highlight.c1, "rgb(0 0 150 / 100%)");
+		drawRefDots(ctx, highlight.c2, "rgb(0 0 150 / 100%)");
+		drawPiece(ctx, highlight.c1, highlight.c2);
+	}
 	
 	// Reference line
 	/*
@@ -105,4 +110,12 @@ if(canvas.getContext) {
 	ctx.closePath();
 	ctx.stroke();
 	*/
+	setTimeout(draw, 1000 / frameRate, ctx);
+}
+
+// Drawing kumiko panel
+if(canvas.getContext) {
+	const ctx = canvas.getContext("2d");
+
+	setTimeout(draw, 1000 / frameRate, ctx);
 }

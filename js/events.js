@@ -16,9 +16,6 @@ canvas.addEventListener('mousemove', e => {
 		y: mouseCoords.y > m1.y + 0.5? m1.y + 1: (mouseCoords.y < m1.y - 0.5? m1.y - 1: m1.y),
 	}
 
-	console.log(m1);
-	console.log(m2);
-
 	highlightPoint(e.target.getContext("2d"), m1, m2);
 
 });
