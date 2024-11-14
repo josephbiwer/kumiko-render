@@ -8,9 +8,9 @@ const canvasDims = {
 // Kumiko parameters
 const frameRate = 30;
 const strokeWidth = 1.5;
-const deltaY = 100;
-const deltaX = 100;
-const density = 8;
+let deltaY = 100;
+let deltaX = 100;
+let density = 8;
 
 const pieces = [];
 

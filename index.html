@@ -2,12 +2,32 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/controls.css" />
 	</head>
 	<body>
 		<div id="main-wrapper">
+			<div class="slider">
+				<div class="slider-bar" data-min="25" data-max="250" data-val="25" id="deltax">
+					<span></span>
+				</div>
+				<label for="deltax">DeltaX</label>
+			</div>
+			<div class="slider">
+				<div class="slider-bar" data-min="25" data-max="250" data-val="25" id="deltay">
+					<span></span>
+				</div>
+				<label for="deltay">DeltaY</label>
+			</div>
+			<div class="slider">
+				<div class="slider-bar" data-min="2" data-max="8" data-val="2" id="density">
+					<span></span>
+				</div>
+				<label for="density">Density</label>
+			</div>
 			<canvas height="500px" width="500px"></canvas>
 		</div>
 		<script src="js/main.js"></script>
 		<script src="js/events.js"></script>
+		<script src="js/controls.js"></script>
 	</body>
 </html>
