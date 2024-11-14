@@ -1,5 +1,3 @@
-console.log('adding events for canvas');
-
 canvas.addEventListener('mousemove', e => {
 	const mouseCoords = {
 		x: e.layerX / (deltaX / 2),
@@ -25,5 +23,5 @@ canvas.addEventListener('mouseleave', e => {
 });
 
 canvas.addEventListener('click', e => {
-	console.log("clicked canvas");
+	// Clicked the canvas
 });

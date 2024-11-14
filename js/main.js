@@ -8,8 +8,8 @@ const canvasDims = {
 // Kumiko parameters
 const frameRate = 30;
 const strokeWidth = 1.5;
-const deltaY = 50;
-const deltaX = 50;
+const deltaY = 100;
+const deltaX = 100;
 
 // Rendering logic
 function drawRefDots (ctx, coords, color) {
@@ -89,10 +89,6 @@ function draw(ctx) {
 	draw3Sides(ctx);
 	drawDots(ctx);
 
-	// Draw list of pieces
-	drawPiece(ctx, {x: 0, y:0}, {x: 1, y: 1});
-	drawPiece(ctx, {x: 1, y:0}, {x: 1, y: 1});
-
 	// Draw hover indicator
 	if(highlight !== null) {
 		// Set previous highlighted one to its default state
@@ -101,15 +97,9 @@ function draw(ctx) {
 		drawPiece(ctx, highlight.c1, highlight.c2);
 	}
 	
-	// Reference line
-	/*
-	ctx.strokeStyle = "rgb(255, 0, 0)";
-	ctx.beginPath();
-	ctx.moveTo(25, 0);
-	ctx.lineTo(25, 50);
-	ctx.closePath();
-	ctx.stroke();
-	*/
+	// Add logic here to draw additional pieces on the kumiko panel
+
+	// Repeat draw loop
 	setTimeout(draw, 1000 / frameRate, ctx);
 }
 
