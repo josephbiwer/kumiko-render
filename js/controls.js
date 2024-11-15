@@ -1,7 +1,16 @@
 const sliders = document.querySelectorAll(".slider"); 
 
 sliders.forEach(s => {
-	s.querySelector('label').innerHTML = s.querySelector('label').htmlFor + ": " + parseInt(s.querySelector('.slider-bar').dataset.min);
+	// Set initial values vased on data-val in HTML
+	s.querySelector('label').innerHTML = s.querySelector('label').htmlFor + ": " + parseInt(s.querySelector('.slider-bar').dataset.val);
+
+	// Set slider position
+	const bar = s.querySelector('.slider-bar');
+	const min = bar.dataset.min;
+	const max = bar.dataset.max;
+	s.querySelector('.slider-bar span').style.left = (100 * (bar.dataset.val - min) / (max - min)) + "%";
+
+	// Event handling
 	const span = s.querySelector('span');
 
 	span.addEventListener('mousedown', e => {
