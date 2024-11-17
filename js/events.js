@@ -9,19 +9,13 @@ function getMousePos(element, e) {
 }
 
 canvas.addEventListener('mousemove', e => {
+	const coords = getMousePos(e.target, e);
+	mouseCoords = coords;
+
 	if(m1 !== null) {
 		const coords = getMousePos(e.target, e);
-		const mouseCoords = {
-			x: coords.x / (deltaX / density),
-			y: coords.y / (deltaY / density)
-		}
 
-		const m2 = {
-			x: mouseCoords.x > m1.x + 0.5? m1.x + 1: (mouseCoords.x < m1.x - 0.5? m1.x - 1: m1.x),
-			y: mouseCoords.y > m1.y + 0.5? m1.y + 1: (mouseCoords.y < m1.y - 0.5? m1.y - 1: m1.y),
-		}
-
-		highlightPoint(e.target.getContext("2d"), m1, mouseCoords);
+		highlightPoint(e.target.getContext("2d"), m1, coords);
 	}
 
 });
@@ -32,36 +26,25 @@ canvas.addEventListener('mouseleave', e => {
 
 canvas.addEventListener('mousedown', e => {
 	const coords = getMousePos(e.target, e);
+	/*
 	const mouseCoords = {
-		x: coords.x / (deltaX / density),
-		y: coords.y / (deltaY / density)
+		x: coords.x / (delta / density),
+		y: coords.y / (delta / density)
 	}
+	*/
+	m1 = getMousePts(coords);
 
-	m1 = {
-		x: Math.round(mouseCoords.x),
-		y: Math.round(mouseCoords.y)
-	}
-
-	highlightPoint(e.target.getContext("2d"), m1, mouseCoords);
+	highlightPoint(e.target.getContext("2d"), m1, m1);
 
 });
 
 canvas.addEventListener('mouseup', e => {
 	if(m1 !== null) {
 		const coords = getMousePos(e.target, e);
-		const mouseCoords = {
-			x: coords.x / (deltaX / density),
-			y: coords.y / (deltaY / density)
-		}
-
-		const m2 = {
-			x: Math.round(mouseCoords.x),
-			y: Math.round(mouseCoords.y)
-		}
 
 		const p = {
 			c1: m1,
-			c2: m2
+			c2: getMousePts(coords)
 		};
 
 		addPiece(p);
@@ -69,5 +52,6 @@ canvas.addEventListener('mouseup', e => {
 		m1 = null;
 		highlightPoint(e.target.getContext("2d"), null, null);
 	}
+	highlightPoint(e.target.getContext("2d"), null, null);
 	
 });

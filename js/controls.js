@@ -33,11 +33,8 @@ sliders.forEach(s => {
 				case 'density':
 					density = val;
 					break;
-				case 'deltax':
-					deltaX = val;
-					break;
-				case 'deltay':
-					deltaY = val;
+				case 'delta':
+					delta = val;
 					break;
 			}
 		}
