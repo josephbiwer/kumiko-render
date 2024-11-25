@@ -1,4 +1,5 @@
 class Grid {
+
 	constructor(ctx, dims, delta) {
 		this.ctx = ctx;
 		this.dims = dims;
@@ -9,16 +10,32 @@ class Grid {
 		this.pieces = [];
 
 		this.mouseCoords = {x: 0, y: 0};
+        this.m1 = null;
 	}
 
 	render(){}
 	addPiece(p) {this.pieces.push(p)}
+
+    getMousePos(element, e) {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        return { x, y };
+    }
+
 }
 
 class GridEqualTri extends Grid {
 
-	constructor(ctx, dims, delta) {
-		super(ctx, dims, delta);
+	constructor(cvs, dims, delta) {
+		super(cvs.getContext("2d"), dims, delta);
+
+        // Event listeners on canvas
+        // Calling function manually, unbinds "this" keyword from the event, allowing function operations
+        // to refer to the class methods
+        cvs.addEventListener('mousemove', e => this.CanvasMouseMove(e));
+        cvs.addEventListener('mousedown', e => this.CanvasMouseDown(e));
+        cvs.addEventListener('mouseup', e => this.CanvasMouseUp(e));
 
 		// Creating points
 		const hn = this.delta / (4 * Math.pow(Math.cos(Math.PI / 6), 2));
@@ -90,6 +107,51 @@ class GridEqualTri extends Grid {
 		this.ctx.stroke();
 	}
 
+    // event handlers
+    /*
+    getMousePos(element, e) {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        return { x, y };
+    }
+    */
+
+    CanvasMouseMove(e) {
+        const coords = this.getMousePos(e.target, e);
+        this.mouseCoords = coords;
+
+        if(this.m1 !== null) {
+            const coords = this.getMousePos(e.target, e);
+
+            this.highlightPoint(this.m1, coords);
+        }
+    }
+
+    CanvasMouseDown(e) {
+        const coords = this.getMousePos(e.target, e);
+        this.m1 = this.getMousePts(coords);
+        this.highlightPoint(this.m1, this.m1);
+    };
+
+    CanvasMouseUp(e) {
+        if(this.m1 !== null) {
+            const coords = this.getMousePos(e.target, e);
+
+            const p = {
+                c1: this.m1,
+                c2: this.getMousePts(coords)
+            };
+
+            this.addPiece(p);
+
+            this.m1 = null;
+            this.highlightPoint(null, null);
+        }
+        this.highlightPoint(null, null);
+        
+    };
+
 	render () {
 		// Resetting background to white
 		this.ctx.fillStyle = "rgb(255 255 255)";
@@ -138,3 +200,4 @@ class GridEqualTri extends Grid {
 	}
 } // end of GridEqualTri class
 
+export { GridEqualTri };

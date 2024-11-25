@@ -1,4 +1,8 @@
+// import { CanvasMouseMove, CanvasMouseDown, CanvasMouseUp } from './events.js'
+import { GridEqualTri } from './Grid.js'
+
 const canvas = document.querySelector("canvas");
+
 let grid = null;
 
 // Kumiko parameters
@@ -62,7 +66,7 @@ if(canvas.getContext) {
 	// let density = parseInt(document.querySelector('.slider-bar#density').dataset.val);
 
 	grid = new GridEqualTri(
-		ctx,
+		canvas,
 		{
 			x: canvas.width,
 			y: canvas.height
